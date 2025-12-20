@@ -1,9 +1,11 @@
 import { homePage } from "../pages/homePage";
-import { loginPage } from "../pages/authEmailPage";
+import { authEmailPage } from "../pages/authEmailPage";
+import { loginPage } from "../pages/loginPage";
 
 const routes: Record<string, (root: HTMLElement) => void> = {
   "/": homePage,
-  "/authEmail": loginPage,
+  "/authEmail": authEmailPage,
+  "/login": loginPage,
 };
 
 const root = document.getElementById("app")!;

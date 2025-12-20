@@ -18,7 +18,7 @@ export function homePage(root: HTMLElement) {
   if (slotBtnUbi) {
     const startBtn = createButton({
       text: "Dar mi ubicación actual",
-      className: "btn--ubi",
+      className: "btn--blue",
     });
     slotBtnUbi.replaceWith(startBtn.el);
   }
@@ -27,9 +27,8 @@ export function homePage(root: HTMLElement) {
   if (slotBtnInfo) {
     const startBtn = createButton({
       text: "¿Cómo funciona Pet Finder?",
-      className: "btn--info",
+      className: "btn--green",
     });
     slotBtnInfo.replaceWith(startBtn.el);
   }
-  
 }
