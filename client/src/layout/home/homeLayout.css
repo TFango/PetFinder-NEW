@@ -1,0 +1,43 @@
+.lb-main {
+  display: flex;
+  justify-content: center;
+}
+
+.lb-main__container {
+  height: calc(100dvh-70px);
+  display: flex;
+  width: 70%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.lb-main__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.lb-main__title {
+  font-family: lato;
+  color: rgba(235, 99, 114, 1);
+  font-weight: 700;
+}
+
+.lb-main__description {
+  font-family: lato;
+  font-size: 18px;
+  margin: 0px;
+}
+
+.lb-main__buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 35px;
+  width: 100%;
+}

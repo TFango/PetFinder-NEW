@@ -1,0 +1,16 @@
+.btn {
+  color: rgba(255, 255, 255, 1);
+  border: none;
+  height: 50px;
+  border-radius: 5px;
+  font-family: lato;
+  font-size: 15px;
+}
+
+.btn--ubi {
+  background-color: rgba(90, 143, 236, 1);
+}
+
+.btn--info{
+    background-color: rgba(0, 168, 132, 1);
+}
