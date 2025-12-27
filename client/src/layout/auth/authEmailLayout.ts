@@ -2,13 +2,7 @@ import "./authEmailLayout.css";
 
 export function loginLayout() {
   const div = document.createElement("div");
-
-  newFunction();
-
-  return div;
-
-  function newFunction() {
-    div.innerHTML = `
+  div.innerHTML = `
   <div id="slot-header"></div>
 
    <main class="ah-main">
@@ -35,7 +29,7 @@ export function loginLayout() {
 
       </div>
     </main>
-  
   `;
-  }
+
+  return div;
 }

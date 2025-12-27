@@ -1,6 +1,7 @@
 import { createHeader } from "../components/header/header";
 import { createButton } from "../components/button/button";
 import { homeLayout } from "../layout/home/homeLayouts";
+import { getCurrentLocation } from "../../util/lat&lng";
 
 export function homePage(root: HTMLElement) {
   root.innerHTML = "";
@@ -16,10 +17,21 @@ export function homePage(root: HTMLElement) {
 
   const slotBtnUbi = view.querySelector<HTMLDivElement>("#slot-btnUbi");
   if (slotBtnUbi) {
-    const startBtn = createButton({
-      text: "Dar mi ubicación actual",
-      className: "btn--blue",
-    });
+    const startBtn = createButton(
+      {
+        text: "Dar mi ubicación actual",
+        className: "btn--blue",
+      },
+      async () => {
+        try {
+          const location = await getCurrentLocation();
+          console.log("Ubicación:", location);
+          // 👉 acá guardás lat/lng o lo pasás al mapa
+        } catch (err) {
+          alert("No se pudo obtener la ubicación");
+        }
+      }
+    );
     slotBtnUbi.replaceWith(startBtn.el);
   }
 

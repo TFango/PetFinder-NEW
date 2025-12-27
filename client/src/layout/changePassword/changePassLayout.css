@@ -1,0 +1,36 @@
+.cp-main {
+  display: flex;
+  justify-content: center;
+  font-family: lato;
+}
+
+.cp-main__container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: calc(100dvh - 60px);
+  justify-content: space-between;
+  padding: 50px 0px 50px 0;
+}
+
+.cp-main__title {
+  text-align: center;
+}
+
+.cp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.cp-form__group {
+  display: flex;
+  flex-direction: column;
+}
+
+.cp-input {
+  box-shadow: 0px 1px 4px 0px #00000040;
+  border: none;
+  height: 50px;
+  font-size: 18px;
+}

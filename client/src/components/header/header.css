@@ -15,6 +15,7 @@
 
 .lb-header__img-logo {
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .lb-header__img-menu {

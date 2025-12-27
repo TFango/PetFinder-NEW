@@ -1,4 +1,5 @@
 import { OverlayMenu } from "./OverlayMenu";
+import { goTo } from "../../router/router";
 import "./header.css";
 
 export function createHeader() {
@@ -17,9 +18,14 @@ export function createHeader() {
 
   `;
 
+  const logo = header.querySelector(".lb-header__img-logo") as HTMLImageElement;
   const menuBtn = header.querySelector(
     ".lb-header__img-menu"
   ) as HTMLImageElement;
+
+  logo.addEventListener("click", () => {
+    goTo("/");
+  });
 
   function openMenu() {
     if (isMenuOpen) return;

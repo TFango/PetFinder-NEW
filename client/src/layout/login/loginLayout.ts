@@ -14,18 +14,25 @@ export function loginLayout() {
           <p class="lg-main__description">
             Ingresá los siguientes datos para iniciar sesión
           </p>
+          <p class="lg-main__login-error" hidden></p>
         </section>
 
-        <form class="lg-form">
-            
+        
+        <form class="lg-form" id="login-form">
+          <div class="lg-form__group">
             <label for="" class="lg-label">EMAIL</label>
-            <input class="lg-input" type="email">
-            <div id="slot-btn"></div>
-        </form>
+            <input id="email" class="lg-input" type="email">
+          </div>
 
+          <div class="lg-form__group">
+            <label for="" class="lg-label">CONTRASEÑA</label>
+            <input id="password" class="lg-input" type="password">
+          </div>
 
+          <a class="lg-link" href="">Olvidé mi contraseña</a>
+          </form>
 
-
+          <div id="slot-btn" form="login-form" class="lg-btn"></div>
       </div>
     </main>
   

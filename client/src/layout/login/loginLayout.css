@@ -1,0 +1,58 @@
+.lg-main {
+  display: flex;
+  justify-content: center;
+}
+
+.lg-main__container {
+  height: calc(100dvh - 60px);
+  display: flex;
+  flex-direction: column;
+  font-family: lato;
+}
+
+.lg-main__info {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.lg-main__title {
+  font-size: 36px;
+  font-weight: 700px;
+}
+
+.lg-main__description {
+  font-size: 16px;
+}
+
+.lg-form {
+  margin-top: 90px;
+  margin-bottom: 90px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.lg-form__group {
+  display: flex;
+  flex-direction: column;
+}
+
+.lg-input {
+  height: 50px;
+  border: none;
+  box-shadow: 0px 1px 4px 0px #00000040;
+}
+
+.lg-link {
+  align-self: center;
+  margin-top: 25px;
+  color: #5a8fec;
+  text-decoration: none;
+}
+
+.lg-main__login-error {
+  color: #e53e3e;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}

@@ -4,7 +4,7 @@
 }
 
 .lb-main__container {
-  height: calc(100dvh-70px);
+  height: calc(100dvh - 60px);
   display: flex;
   width: 70%;
   flex-direction: column;
