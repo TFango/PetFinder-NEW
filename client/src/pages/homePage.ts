@@ -25,8 +25,7 @@ export function homePage(root: HTMLElement) {
       async () => {
         try {
           const location = await getCurrentLocation();
-          console.log("Ubicación:", location);
-          // 👉 acá guardás lat/lng o lo pasás al mapa
+          localStorage.setItem("lastKnownLocation", JSON.stringify(location));
         } catch (err) {
           alert("No se pudo obtener la ubicación");
         }

@@ -11,5 +11,6 @@ authRouter.patch(
   authMiddleware,
   AuthController.changePassword
 );
+authRouter.post("/auth/email", AuthController.chekEmail);
 
 export default authRouter;

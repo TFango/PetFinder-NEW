@@ -33,6 +33,9 @@ export function createDropzoneComponent({
     getFiles() {
       return dz.files;
     },
+    openFileDialog() {
+      dz.hiddenFileInput?.click();
+    },
     clear() {
       dz.removeAllFiles(true);
     },

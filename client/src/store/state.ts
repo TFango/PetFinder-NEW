@@ -180,4 +180,30 @@ export const appState = {
       throw new Error(data.error || "Error al actualizar contraseña");
     }
   },
+  async createPet(name: string, lat: string, lng: string, file: File) {
+    if (!state.token) {
+      this.logout();
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("lat", String(lat));
+    formData.append("lng", String(lng));
+    formData.append("image", file);
+
+    const res = await fetch(`${API_BASE_URL}/pets`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${state.token}`,
+      },
+      body: formData,
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || "Error al crear mascota perdida");
+    }
+  },
 };

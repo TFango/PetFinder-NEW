@@ -7,7 +7,11 @@ export async function createPet(req: Request, res: Response) {
   try {
     const userId = (req as any).userId;
 
-    const pet = await PetService.createPet(userId, req.body);
+    const pet = await PetService.createPet(
+      userId,
+      req.body,
+      req.file // 👈 ahora sí
+    );
     return res.status(201).json({ message: "Pet creado con exito", pet });
   } catch (err: any) {
     return res.status(400).json({ error: err.mesagge });
@@ -45,7 +49,7 @@ export async function markAsFound(req: Request, res: Response) {
     const userId = (req as any).userId;
     const { petId } = req.params;
 
-    console.log("pet id", petId)
+    console.log("pet id", petId);
 
     await PetService.markAsFound(userId, petId);
 

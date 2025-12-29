@@ -69,3 +69,13 @@ export async function changePassword(id: string, newPassword: string) {
 
   return true;
 }
+
+export async function chekEmail(email: string) {
+  if (!email) {
+    throw new Error("Fala el email a buscar");
+  }
+
+  const user = await User.findOne({ where: { email } });
+
+  return user;
+}

@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "client": "link:",
-    "dropzone": "6.0.0-beta.2"
+    "dropzone": "6.0.0-beta.2",
+    "mapbox-gl": "^3.17.0"
   }
 }

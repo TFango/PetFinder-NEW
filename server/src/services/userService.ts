@@ -15,6 +15,7 @@ export async function getMe(id: string) {
   }
 
   return {
+    id: user.get("id"),
     name: user.get("name"),
     location: user.get("location"),
   };
@@ -40,5 +41,10 @@ export async function updateMe(
     ...(newLocation && { location: newLocation }),
   });
 
-  return true;
+  return {
+    id: user.get("id"),
+    name: user.get("name"),
+    email: user.get("email"),
+    location: user.get("location"),
+  };
 }

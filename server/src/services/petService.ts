@@ -5,21 +5,32 @@
 
 import { Pet } from "../models";
 import { client, PETS_INDEX } from "../lib/algolia";
+import { uploadToCloudinary } from "./uplodadFileCloudinary";
 
-export async function createPet(userId: string, data: any) {
-  console.log("DATA:", data);
+export async function createPet(
+  userId: string,
+  data: any,
+  file: Express.Multer.File
+) {
   if (!userId) {
     throw new Error("Usuario no autenticado");
   }
 
-  const { lat, lng } = data;
+  if (!file) throw new Error("Imagen obligatoria");
+
+  const { name, lat, lng } = data;
 
   if (lat == null || lng == null) {
     throw new Error("Lat y Lng son obligatorios");
   }
 
+  const imageUrl = await uploadToCloudinary(file.buffer);
+
   const pet = await Pet.create({
-    ...data,
+    name,
+    imageUrl,
+    lat: Number(lat),
+    lng: Number(lng),
     UserId: userId,
     status: "lost",
   });
