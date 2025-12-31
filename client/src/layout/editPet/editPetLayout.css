@@ -1,0 +1,43 @@
+.ep-main {
+  display: flex;
+  justify-content: center;
+  min-height: calc(100dvh - 60px);
+}
+
+.ep-main__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: lato;
+  width: 80%;
+}
+
+.ep-main__info {
+  text-align: center;
+}
+
+.map {
+  width: 100%;
+  height: 300px;
+  border-radius: 8px;
+}
+
+.ep-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ep-form__group {
+  display: flex;
+  flex-direction: column;
+}
+
+.ep-form__dropzone-description {
+  margin: 10px 0px 0px 0px;
+  text-align: center;
+}
+
+.ep-form__map-description {
+  text-align: center;
+}

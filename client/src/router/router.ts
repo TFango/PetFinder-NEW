@@ -7,6 +7,8 @@ import { myDataPage } from "../pages/myDataPage";
 import { profilePage } from "../pages/profilePage";
 import { changePassPage } from "../pages/changePassPage";
 import { reportPetPage } from "../pages/reportPetPage";
+import { editPetPage } from "../pages/editPetPage";
+import { myPetsPage } from "../pages/myPetsPage";
 
 const routes: Record<string, (root: HTMLElement) => void> = {
   "/": homePage,
@@ -17,6 +19,8 @@ const routes: Record<string, (root: HTMLElement) => void> = {
   "/profile": profilePage,
   "/changePassword": changePassPage,
   "/reportPet": reportPetPage,
+  "/editPet": editPetPage,
+  "/myPetsReported": myPetsPage,
 };
 
 const privateRoutes = ["/myData", "/myPetsReported", "/reportPet"];

@@ -19,3 +19,12 @@
 .btn--gray {
   background-color: rgba(74, 85, 83, 1);
 }
+
+.btn--red {
+  background-color: rgba(235, 99, 114, 1);
+}
+
+.btn--myPets {
+  height: 40px;
+  width: 100px;
+}

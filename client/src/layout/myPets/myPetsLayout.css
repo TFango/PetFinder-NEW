@@ -1,0 +1,60 @@
+.mp-main {
+  display: flex;
+  justify-content: center;
+  min-height: calc(100dvh - 60px);
+}
+
+.mp-main__container {
+  display: flex;
+  flex-direction: column;
+  font-family: lato;
+  width: 90%;
+}
+
+.img {
+  width: 50px;
+  height: 50px;
+}
+
+.mp-pet__card {
+  overflow: hidden;
+  width: 100%;
+  background-color: rgba(38, 48, 46, 1);
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.mp-pet__card-img {
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mp-pet__card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0px 10px 0px;
+}
+
+.mp-pet__card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mp-pet__card-namePet {
+  color: rgba(255, 255, 255, 1);
+  margin: 0px;
+}
+
+.mp-pet__card-location {
+  color: rgba(255, 255, 255, 1);
+  margin: 0;
+}
+
+.btn {
+  height: 40px;
+  width: 100px;
+}

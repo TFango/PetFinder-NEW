@@ -40,7 +40,6 @@ export const appState = {
     }
 
     const data = await res.json();
-    console.log(data);
 
     state.email = data.email;
     state.name = data.name;
