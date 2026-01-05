@@ -1,4 +1,6 @@
 import "./homeLayout.css";
+ 
+import homeImg from "../../assets/img-home.svg";
 
 export function homeLayout() {
   const div = document.createElement("div");
@@ -8,7 +10,7 @@ export function homeLayout() {
 
   <main class="lb-main">
       <div class="lb-main__container">
-        <img src="src/assets/img-home.svg" alt="" class="lb-main__img-logo" />
+        <img src="${homeImg}" alt="" class="lb-main__img-logo" />
 
         <section class="lb-main__info">
           <h1 class="lb-main__title">Pet Finder App</h1>

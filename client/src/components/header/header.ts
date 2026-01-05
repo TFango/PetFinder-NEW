@@ -2,6 +2,9 @@ import { OverlayMenu } from "./OverlayMenu";
 import { goTo } from "../../router/router";
 import "./header.css";
 
+import logoImg from "../../assets/logo.svg";
+import menuImg from "../../assets/menu.svg"
+
 export function createHeader() {
   const header = document.createElement("header");
   header.className = "lb-header";
@@ -9,11 +12,12 @@ export function createHeader() {
   let isMenuOpen = false;
   let overlay: HTMLElement | null = null;
 
+
   header.innerHTML = `
   <div class="lb-header__container">
-      <img src="src/assets/logo.svg" alt="" class="lb-header__img-logo" />
+      <img src="${logoImg}" alt="" class="lb-header__img-logo" />
 
-      <img src="src/assets/menu.svg" alt="" class="lb-header__img-menu" />
+      <img src="${menuImg}" alt="" class="lb-header__img-menu" />
   </div>
 
   `;

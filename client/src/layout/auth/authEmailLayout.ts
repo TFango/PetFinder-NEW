@@ -1,13 +1,15 @@
 import "./authEmailLayout.css";
 
+import authImg from "../../assets/authLogo.svg"
+
 export function loginLayout() {
   const div = document.createElement("div");
   div.innerHTML = `
   <div id="slot-header"></div>
-
+ 
    <main class="ah-main">
       <div class="ah-main__container">
-        <img src="src/assets/authLogo.svg" alt="" class="ah-main__img-logo" />
+        <img src="${authImg}" alt="" class="ah-main__img-logo" />
 
         <section class="ah-main__info">
           <h1 class="ah-main__title">Ingresar</h1>
