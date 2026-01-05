@@ -1,0 +1,17 @@
+.dropzone {
+  width: 100%;
+  height: 180px; /* ajustá a gusto */
+  border-radius: 8px;
+  overflow: hidden; /* CLAVE */
+}
+
+.dropzone .dz-image {
+  width: 100%;
+  height: 100%;
+}
+
+.dropzone .dz-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 👈 LA CLAVE */
+}

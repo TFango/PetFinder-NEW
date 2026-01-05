@@ -64,9 +64,16 @@ export async function editPet(req: Request, res: Response) {
     const userId = (req as any).userId;
     const { petId } = req.params;
 
-    await PetService.editPet(userId, petId, req.body);
+    await PetService.editPet(userId, petId, req.body, req.file);
     return res.json({ message: "Mascota perdida editada con exito" });
   } catch (err: any) {
     return res.status(400).json({ error: err.message });
   }
+}
+export async function getPet(req: Request, res: Response) {
+  const userId = (req as any).userId;
+  const { petId } = req.params;
+
+  const pet = await PetService.getPetById(userId, petId);
+  res.json({ pet });
 }

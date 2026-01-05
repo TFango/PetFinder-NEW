@@ -1,0 +1,32 @@
+.re-main {
+  display: flex;
+  justify-content: center;
+  min-height: calc(100dvh - 60px);
+}
+
+.re-main__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 85%;
+  font-family: lato;
+  padding: 25px 0px 25px 0px;
+}
+
+.re-main__img {
+  width: 305px;
+  height: 231px;
+  align-self: center;
+}
+
+.re-main__info {
+  text-align: center;
+}
+
+.re-main__title {
+  font-size: 36px;
+}
+
+.re-main__description {
+  font-size: 16px;
+}

@@ -12,6 +12,8 @@ export function reportPetPage(root: HTMLElement) {
   const view = reportPetLayout();
   root.appendChild(view);
 
+  let locationText: string | null = null;
+
   const slotHeader = view.querySelector<HTMLDivElement>("#slot-header");
   if (slotHeader) {
     const startHeader = createHeader();
@@ -76,6 +78,7 @@ export function reportPetPage(root: HTMLElement) {
         MAPBOX_TOKEN
       );
 
+      locationText = address;
       locationInput.value = address;
     } catch {
       locationInput.value = "Ubicación seleccionada";
@@ -95,8 +98,6 @@ export function reportPetPage(root: HTMLElement) {
         const name = nameInput?.value;
         const location = mapPicker?.getLocation();
         const files = dropzone?.getFiles();
-        console.log(String(location?.lat));
-        console.log(location?.lng);
 
         if (!name) {
           alert("Ingresá un nombre");
@@ -117,7 +118,8 @@ export function reportPetPage(root: HTMLElement) {
           name,
           String(location.lat),
           String(location.lng),
-          files[0] // 👈 EL File real
+          files[0],
+          locationText ?? "" // 👈 EL File real,
         );
       }
     );

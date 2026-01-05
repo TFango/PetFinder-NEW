@@ -179,7 +179,13 @@ export const appState = {
       throw new Error(data.error || "Error al actualizar contraseña");
     }
   },
-  async createPet(name: string, lat: string, lng: string, file: File) {
+  async createPet(
+    name: string,
+    lat: string,
+    lng: string,
+    file: File,
+    locationText: string
+  ) {
     if (!state.token) {
       this.logout();
       return;
@@ -190,6 +196,7 @@ export const appState = {
     formData.append("lat", String(lat));
     formData.append("lng", String(lng));
     formData.append("image", file);
+    formData.append("locationText", locationText);
 
     const res = await fetch(`${API_BASE_URL}/pets`, {
       method: "POST",
@@ -204,5 +211,99 @@ export const appState = {
     if (!res.ok) {
       throw new Error(data.error || "Error al crear mascota perdida");
     }
+  },
+  async getMyPets() {
+    if (!state.token) {
+      this.logout();
+      return;
+    }
+
+    const res = await fetch(`${API_BASE_URL}/pets/me`, {
+      headers: {
+        Authorization: `Bearer ${state.token}`,
+      },
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || "Error al obtener las mascotas");
+    }
+
+    return data.pets;
+  },
+  async getPetById(petId: string) {
+    if (!state.token) {
+      this.logout();
+      return;
+    }
+
+    const res = await fetch(`${API_BASE_URL}/pets/${petId}`, {
+      headers: {
+        Authorization: `Bearer ${state.token}`,
+      },
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || "Error al obtener la mascota");
+    }
+
+    return data.pet;
+  },
+  async editPet(
+    petId: string,
+    data: {
+      name: string;
+      lat: number;
+      lng: number;
+      locationText: string;
+    },
+    file: File | null
+  ) {
+    if (!state.token) {
+      this.logout();
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("lat", String(data.lat));
+    formData.append("lng", String(data.lng));
+    formData.append("locationText", data.locationText);
+
+    if (file) {
+      formData.append("image", file);
+    }
+
+    const res = await fetch(`${API_BASE_URL}/pets/${petId}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${state.token}`,
+      },
+      body: formData,
+    });
+
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error);
+  },
+  async markPetAsFound(petId: string) {
+    if (!state.token) {
+      this.logout();
+      return;
+    }
+
+    const res = await fetch(`${API_BASE_URL}/pets/${petId}/found`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${state.token}`,
+      },
+    });
+
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error);
+
+    return true;
   },
 };

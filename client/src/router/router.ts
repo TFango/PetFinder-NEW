@@ -9,8 +9,14 @@ import { changePassPage } from "../pages/changePassPage";
 import { reportPetPage } from "../pages/reportPetPage";
 import { editPetPage } from "../pages/editPetPage";
 import { myPetsPage } from "../pages/myPetsPage";
+import { reportEmptyPage } from "../pages/reportEmptyPage";
 
-const routes: Record<string, (root: HTMLElement) => void> = {
+type PageFn = (
+  root: HTMLElement,
+  params?: Record<string, string>
+) => void | (() => void) | Promise<void | (() => void)>;
+
+const routes: Record<string, PageFn> = {
   "/": homePage,
   "/authEmail": authEmailPage,
   "/login": loginPage,
@@ -19,11 +25,17 @@ const routes: Record<string, (root: HTMLElement) => void> = {
   "/profile": profilePage,
   "/changePassword": changePassPage,
   "/reportPet": reportPetPage,
-  "/editPet": editPetPage,
+  "/editPet": editPetPage, // 👈 base de la ruta dinámica
   "/myPetsReported": myPetsPage,
+  "/reportEmpty": reportEmptyPage,
 };
 
-const privateRoutes = ["/myData", "/myPetsReported", "/reportPet"];
+const privateRoutes = [
+  "/myData",
+  "/myPetsReported",
+  "/reportPet",
+  "/reportEmpty",
+];
 
 const root = document.getElementById("app")!;
 let cleanup: (() => void) | undefined;
@@ -31,10 +43,13 @@ let cleanup: (() => void) | undefined;
 function render() {
   cleanup?.();
 
-  let route = location.hash.replace("#", "");
+  let route = location.hash.replace("#", "") || "/";
+  let params: Record<string, string> = {};
 
-  if (route === "" || route === undefined) {
-    route = "/";
+  if (route.startsWith("/editPet/")) {
+    const parts = route.split("/");
+    params.petId = parts[2];
+    route = "/editPet";
   }
 
   if (privateRoutes.includes(route) && !appState.isAuthenticated()) {
@@ -47,8 +62,15 @@ function render() {
     return;
   }
 
-  const maybeCleanup = page(root);
-  if (typeof maybeCleanup === "function") cleanup = maybeCleanup;
+  const result = page(root, params);
+
+  if (result instanceof Promise) {
+    result.then((maybeCleanup) => {
+      if (typeof maybeCleanup === "function") cleanup = maybeCleanup;
+    });
+  } else {
+    if (typeof result === "function") cleanup = result;
+  }
 }
 
 export function goTo(path: string) {

@@ -18,6 +18,12 @@ petRouter.patch(
   authMiddleware,
   PetController.markAsFound
 );
-petRouter.patch("/pets/:petId", authMiddleware, PetController.editPet);
+petRouter.patch(
+  "/pets/:petId",
+  authMiddleware,
+  upload.single("image"),
+  PetController.editPet
+);
+petRouter.get("/pets/:petId", authMiddleware, PetController.getPet);
 
 export default petRouter;

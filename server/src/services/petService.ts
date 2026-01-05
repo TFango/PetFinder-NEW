@@ -18,7 +18,7 @@ export async function createPet(
 
   if (!file) throw new Error("Imagen obligatoria");
 
-  const { name, lat, lng } = data;
+  const { name, lat, lng, locationText } = data;
 
   if (lat == null || lng == null) {
     throw new Error("Lat y Lng son obligatorios");
@@ -33,6 +33,7 @@ export async function createPet(
     lng: Number(lng),
     UserId: userId,
     status: "lost",
+    location: locationText,
   });
 
   try {
@@ -121,7 +122,12 @@ export async function markAsFound(userId: string, petId: string) {
   return true;
 }
 
-export async function editPet(userId: string, petId: string, data: any) {
+export async function editPet(
+  userId: string,
+  petId: string,
+  data: any,
+  file?: Express.Multer.File
+) {
   if (!userId || !petId) {
     throw new Error("Datos incompletos");
   }
@@ -135,38 +141,45 @@ export async function editPet(userId: string, petId: string, data: any) {
     throw new Error("No autorizado");
   }
 
-  const { name, imageUrl, location, lat, lng } = data;
+  const { name, locationText, lat, lng } = data;
+
+  console.log("name de petservice:", name);
+
+  let imageUrl;
+
+  if (file) {
+    imageUrl = await uploadToCloudinary(file.buffer);
+  }
 
   await pet.update({
     ...(name && { name }),
+    ...(lat != null && { lat: Number(lat) }),
+    ...(lng != null && { lng: Number(lng) }),
+    ...(locationText && { locationText }),
     ...(imageUrl && { imageUrl }),
-    ...(location && { location }),
-    ...(lat != null && { lat }),
-    ...(lng != null && { lng }),
   });
 
-  const algoliaObject: any = {
-    objectID: pet.get("id"),
-    name: pet.get("name"),
-    status: pet.get("status"),
-    ...(pet.get("imageUrl") && { imageUrl: pet.get("imageUrl") }),
-  };
-
-  if (pet.get("lat") != null && pet.get("lng") != null) {
-    algoliaObject._geoloc = {
-      lat: pet.get("lat"),
-      lng: pet.get("lng"),
-    };
-  }
-
-  try {
-    await client.saveObject({
-      indexName: PETS_INDEX,
-      body: algoliaObject,
-    });
-  } catch (err) {
-    console.error("Error actualizando Algolia", err);
-  }
+  await client.saveObject({
+    indexName: PETS_INDEX,
+    body: {
+      objectID: pet.get("id"),
+      name: pet.get("name"),
+      imageUrl: pet.get("imageUrl"),
+      status: pet.get("status"),
+      _geoloc: {
+        lat: pet.get("lat"),
+        lng: pet.get("lng"),
+      },
+    },
+  });
 
   return true;
+}
+export async function getPetById(userId: string, petId: string) {
+  const pet = await Pet.findByPk(petId);
+
+  if (!pet) throw new Error("Mascota no encontrada");
+  if (pet.get("UserId") !== userId) throw new Error("No autorizado");
+
+  return pet;
 }

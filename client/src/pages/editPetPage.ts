@@ -6,17 +6,31 @@ import { goTo } from "../router/router";
 import { appState } from "../store/state";
 import { createMapPicker } from "../components/mapbox/mapbox";
 
-export function editPetPage(root: HTMLElement) {
+export async function editPetPage(
+  root: HTMLElement,
+  params?: { petId?: string }
+) {
   root.innerHTML = "";
 
   const view = editPetLayout();
   root.appendChild(view);
+
+  const petId = params?.petId;
+  if (!petId) {
+    root.textContent = "Mascota no encontrada";
+    return;
+  }
+
+  const pet = await appState.getPetById(petId);
 
   const slotHeader = view.querySelector<HTMLDivElement>("#slot-header");
   if (slotHeader) {
     const startHeader = createHeader();
     slotHeader.replaceWith(startHeader.el);
   }
+
+  const nameInput = view.querySelector<HTMLInputElement>("#name")!;
+  nameInput.value = pet.name;
 
   let dropzone = null;
   const slotDropzone = view.querySelector<HTMLDivElement>("#slot-dropzone");
@@ -29,43 +43,34 @@ export function editPetPage(root: HTMLElement) {
     });
   }
 
-  const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
-
-  const slotMap = view.querySelector<HTMLDivElement>("#slot-map");
-  const locationInput = view.querySelector<HTMLInputElement>("#location-input");
-
-  let mapPicker = null;
-  const savedLocation = localStorage.getItem("lastKnownLocation");
-
-  const initialLocation = savedLocation ? JSON.parse(savedLocation) : undefined;
-
-  if (slotMap) {
-    mapPicker = createMapPicker({
-      element: slotMap,
-      accessToken: MAPBOX_TOKEN,
-      initialLocation,
-    });
-
-    if (initialLocation) {
-      mapPicker.setLocation(initialLocation); // 👈 CLAVE
-    }
+  if (pet.imageUrl) {
+    dropzone?.setImageFromUrl(pet.imageUrl);
   }
 
+  const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
+  const slotMap = view.querySelector<HTMLDivElement>("#slot-map")!;
+  const locationInput =
+    view.querySelector<HTMLInputElement>("#location-input")!;
+
+  locationInput.value = pet.locationText ?? "";
+
+  const mapPicker = createMapPicker({
+    element: slotMap,
+    accessToken: MAPBOX_TOKEN,
+  });
+
+  mapPicker.setLocation({ lat: pet.lat, lng: pet.lng });
+
   slotMap?.addEventListener("click", async () => {
-    const location = mapPicker?.getLocation();
-    if (!location || !locationInput) return;
+    const location = mapPicker.getLocation();
+    if (!location) return;
 
-    try {
-      const address = await reverseGeocode(
-        location.lat,
-        location.lng,
-        MAPBOX_TOKEN
-      );
-
-      locationInput.value = address;
-    } catch {
-      locationInput.value = "Ubicación seleccionada";
-    }
+    const address = await reverseGeocode(
+      location.lat,
+      location.lng,
+      MAPBOX_TOKEN
+    );
+    locationInput.value = address;
   });
 
   const btnPicturSlot = view.querySelector<HTMLDivElement>("#btn-picture");
@@ -82,14 +87,32 @@ export function editPetPage(root: HTMLElement) {
     btnPicturSlot.replaceWith(startBtn.el);
   }
 
-  const nameInput = view.querySelector<HTMLInputElement>("#name");
-
   const btnSaveSlot = view.querySelector<HTMLDivElement>("#btn-save");
   if (btnSaveSlot) {
-    const startBtn = createButton({
-      text: "Guardar",
-      className: "btn--blue",
-    });
+    const startBtn = createButton(
+      {
+        text: "Guardar",
+        className: "btn--blue",
+      },
+      async () => {
+        const files = dropzone ? dropzone.getFiles() : [];
+        const file = files.length > 0 ? files[0] : null;
+
+        const location = mapPicker.getLocation();
+
+        await appState.editPet(
+          petId,
+          {
+            name: nameInput.value,
+            lat: location?.lat ?? pet.lat,
+            lng: location?.lng ?? pet.lng,
+            locationText: locationInput.value,
+          },
+          file
+        );
+        goTo("/myPetsReported");
+      }
+    );
     btnSaveSlot.replaceWith(startBtn.el);
   }
 
@@ -100,7 +123,11 @@ export function editPetPage(root: HTMLElement) {
         text: "Reportar como encontrada",
         className: "btn--green",
       },
-      () => {}
+      async () => {
+        await appState.markPetAsFound(petId);
+        alert("Mascota marcada como encontrada");
+        goTo("/myPetsReported");
+      }
     );
     btnReportSlot.replaceWith(startBtn.el);
   }
@@ -113,7 +140,7 @@ export function editPetPage(root: HTMLElement) {
         className: "btn--red",
       },
       () => {
-        goTo("/");
+        goTo("/myPetsReported");
       }
     );
     btnCancelSlot.replaceWith(startBtn.el);

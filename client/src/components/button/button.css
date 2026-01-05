@@ -25,6 +25,7 @@
 }
 
 .btn--myPets {
+  background-color: rgba(90, 143, 236, 1);
   height: 40px;
   width: 100px;
 }

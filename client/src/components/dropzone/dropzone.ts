@@ -1,5 +1,6 @@
 import Dropzone from "dropzone";
 import "dropzone/dist/dropzone.css";
+import "./dropzone.css"
 
 type DropzoneComponentOptions = {
   element: HTMLElement;
@@ -38,6 +39,19 @@ export function createDropzoneComponent({
     },
     clear() {
       dz.removeAllFiles(true);
+    },
+    setImageFromUrl(imageUrl: string) {
+      const mockFile: any = {
+        name: "image",
+        size: 123456,
+        accepted: true,
+      };
+
+      dz.emit("addedfile", mockFile);
+      dz.emit("thumbnail", mockFile, imageUrl);
+      dz.emit("complete", mockFile);
+
+      dz.files.push(mockFile);
     },
     destroy() {
       dz.destroy();
