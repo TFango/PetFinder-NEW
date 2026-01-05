@@ -2,6 +2,7 @@ import { createHeader } from "../components/header/header";
 import { createButton } from "../components/button/button";
 import { homeLayout } from "../layout/home/homeLayouts";
 import { getCurrentLocation } from "../../util/lat&lng";
+import { goTo } from "../router/router";
 
 export function homePage(root: HTMLElement) {
   root.innerHTML = "";
@@ -26,8 +27,9 @@ export function homePage(root: HTMLElement) {
         try {
           const location = await getCurrentLocation();
           localStorage.setItem("lastKnownLocation", JSON.stringify(location));
+          goTo("/petsNearby");
         } catch (err) {
-          alert("No se pudo obtener la ubicación");
+          goTo("/chooseLocation");
         }
       }
     );

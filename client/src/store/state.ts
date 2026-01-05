@@ -1,6 +1,7 @@
 import { goTo } from "../router/router";
 
-const API_BASE_URL = "http://localhost:3000";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 type StateData = {
   token: string | null;
@@ -124,6 +125,10 @@ export const appState = {
     });
 
     const resul = await res.json();
+
+    if (!res.ok) {
+      throw new Error(resul.error || "Error al registrar");
+    }
 
     localStorage.setItem("token", resul.token);
     localStorage.setItem("email", data.email);
@@ -305,5 +310,44 @@ export const appState = {
     if (!res.ok) throw new Error(json.error);
 
     return true;
+  },
+  async getNearbyPets(lat: number, lng: number) {
+    if (!lat || !lng) {
+      throw new Error("Lat y Lng son obligatorios");
+    }
+
+    const res = await fetch(
+      `${API_BASE_URL}/pets/nearby?lat=${lat}&lng=${lng}`
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || "Error al obtener mascotas cercanas");
+    }
+
+    return data.results;
+  },
+  async createReport(
+    petId: string,
+    data: {
+      name: string;
+      reporterPhone: string;
+      location: string;
+    }
+  ) {
+    const res = await fetch(`${API_BASE_URL}/pets/${petId}/report`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      throw new Error(json.error || "Error al crear el reporte");
+    }
   },
 };

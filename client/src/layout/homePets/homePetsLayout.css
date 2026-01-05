@@ -1,0 +1,16 @@
+.hp-main {
+  display: flex;
+  justify-content: center;
+  min-height: calc(100dvh - 60px);
+}
+
+.hp-main__container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  font-family: lato;
+}
+
+.hp-main__title {
+  align-self: center;
+}

@@ -7,6 +7,17 @@ import { Pet } from "../models";
 import { client, PETS_INDEX } from "../lib/algolia";
 import { uploadToCloudinary } from "./uplodadFileCloudinary";
 
+type AlgoliaPet = {
+  objectID: string;
+  name: string;
+  imageUrl: string;
+  locationText?: string;
+  _geoloc: {
+    lat: number;
+    lng: number;
+  };
+};
+
 export async function createPet(
   userId: string,
   data: any,
@@ -44,6 +55,7 @@ export async function createPet(
         name: pet.get("name"),
         status: pet.get("status"),
         imageUrl: pet.get("imageUrl"),
+        location: pet.get("location"),
         _geoloc: {
           lat: Number(lat),
           lng: Number(lng),
@@ -76,17 +88,15 @@ export async function getNearbyPets(lat: number, lng: number) {
     throw new Error("Es necesario lat y lng");
   }
 
-  const { results } = await client.search({
-    requests: [
-      {
-        indexName: PETS_INDEX,
-        aroundLatLng: `${lat},${lng}`,
-        aroundRadius: 10000,
-      },
-    ],
+  const response = await client.searchSingleIndex<AlgoliaPet>({
+    indexName: PETS_INDEX,
+    searchParams: {
+      aroundLatLng: `${lat},${lng}`,
+      aroundRadius: 8000,
+    },
   });
 
-  return results;
+  return response.hits;
 }
 
 export async function markAsFound(userId: string, petId: string) {
@@ -141,7 +151,7 @@ export async function editPet(
     throw new Error("No autorizado");
   }
 
-  const { name, locationText, lat, lng } = data;
+  const { name, location, lat, lng } = data;
 
   console.log("name de petservice:", name);
 
@@ -155,7 +165,7 @@ export async function editPet(
     ...(name && { name }),
     ...(lat != null && { lat: Number(lat) }),
     ...(lng != null && { lng: Number(lng) }),
-    ...(locationText && { locationText }),
+    ...(location && { location }),
     ...(imageUrl && { imageUrl }),
   });
 
@@ -166,6 +176,7 @@ export async function editPet(
       name: pet.get("name"),
       imageUrl: pet.get("imageUrl"),
       status: pet.get("status"),
+      location: pet.get("location"),
       _geoloc: {
         lat: pet.get("lat"),
         lng: pet.get("lng"),

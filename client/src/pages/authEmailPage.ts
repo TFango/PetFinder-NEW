@@ -2,6 +2,7 @@ import { loginLayout } from "../layout/auth/authEmailLayout";
 import { createButton } from "../components/button/button";
 import { createHeader } from "../components/header/header";
 import { appState } from "../store/state";
+import { goTo } from "../router/router";
 
 export function authEmailPage(root: HTMLElement) {
   root.innerHTML = "";
@@ -16,6 +17,11 @@ export function authEmailPage(root: HTMLElement) {
   }
 
   const input = view.querySelector<HTMLInputElement>(".ah-input");
+  const linkEl = view.querySelector<HTMLLinkElement>("#ah-link");
+  linkEl?.addEventListener("click", (e) => {
+    e.preventDefault();
+    goTo("/register");
+  });
 
   const slotBtnUbi = view.querySelector<HTMLDivElement>("#slot-btn");
   if (slotBtnUbi) {

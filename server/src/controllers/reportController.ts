@@ -5,7 +5,7 @@ export async function createReport(req: Request, res: Response) {
   try {
     const { petId } = req.params;
 
-    const report = ReportService.createReport(petId, req.body);
+    const report = await ReportService.createReport(petId, req.body);
 
     return res
       .status(201)

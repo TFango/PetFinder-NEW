@@ -24,8 +24,19 @@
   background-color: rgba(235, 99, 114, 1);
 }
 
+.btn--petsNearby {
+  background-color: rgba(235, 99, 114, 1);
+  height: 40px;
+  width: 100px;
+}
+
 .btn--myPets {
   background-color: rgba(90, 143, 236, 1);
   height: 40px;
   width: 100px;
+}
+
+.btn--reportPet {
+  background-color: rgba(0, 168, 132, 1);
+  width: 100%;
 }

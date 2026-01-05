@@ -2,6 +2,7 @@ import { loginLayout } from "../layout/login/loginLayout";
 import { createHeader } from "../components/header/header";
 import { createButton } from "../components/button/button";
 import { appState } from "../store/state";
+import { goTo } from "../router/router";
 
 export function loginPage(root: HTMLElement) {
   root.innerHTML = "";

@@ -12,7 +12,7 @@ petRouter.post(
   PetController.createPet
 );
 petRouter.get("/pets/me", authMiddleware, PetController.getMyPets);
-petRouter.get("/pets/near", PetController.getNearbyPets);
+petRouter.get("/pets/nearby", PetController.getNearbyPets);
 petRouter.patch(
   "/pets/:petId/found",
   authMiddleware,

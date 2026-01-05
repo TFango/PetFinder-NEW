@@ -39,7 +39,7 @@ export function registerLayout() {
 
           <div class="rg-count">
             <label class="rg-label">Ya tenes una cuenta?</label>
-            <a class="rg-link" href="">Iniciar sesión.</a>
+            <a id="rg-link" href="">Iniciar sesión.</a>
           </div>
 
           </form>

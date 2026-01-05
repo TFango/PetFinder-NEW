@@ -24,7 +24,7 @@ export function loginLayout() {
 
         <section class="ah-email">
           <label class="ah-label-email" for="">Aún no tenes cuenta?</label>
-          <a class="ah-link" href="">Registrate.</a>
+          <a id="ah-link" href="">Registrate.</a>
         </section>
 
       </div>

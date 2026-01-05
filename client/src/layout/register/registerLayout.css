@@ -1,14 +1,15 @@
 .rg-main {
   display: flex;
   justify-content: center;
+  min-height: calc(100dvh - 60px);
 }
 
 .rg-main__container {
-  height: calc(100dvh - 60px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   font-family: lato;
+  padding: 20px 0px 20px 0px;
 }
 
 .rg-main__info {

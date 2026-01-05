@@ -6,7 +6,11 @@ type PetCardPromps = {
   name: string;
   imageUrl: string;
   location?: string;
-  onEdit?: (id: string) => void;
+  button?: {
+    text: string;
+    className?: string;
+    onClick: (id: string) => void;
+  };
 };
 
 export function createPetCard({
@@ -14,11 +18,12 @@ export function createPetCard({
   name,
   imageUrl,
   location,
-  onEdit,
+  button,
 }: PetCardPromps): HTMLElement {
   const article = document.createElement("article");
   article.className = "mp-pet__card";
   article.dataset.petId = id;
+
   const shortLocation = location
     ? location.split(",").slice(0, 2).join(",")
     : "";
@@ -41,17 +46,15 @@ export function createPetCard({
     ".pet-card__btn-slot"
   ) as HTMLDivElement;
 
-  if (btnSlot && onEdit) {
-    const editBtn = createButton(
-      {
-        text: "Editar",
-        className: "btn--myPets",
-      },
-      () => onEdit(id)
-    );
+  const btn = createButton(
+    {
+      text: button!.text,
+      className: button!.className,
+    },
+    () => button?.onClick(id)
+  );
 
-    btnSlot.appendChild(editBtn.el);
-  }
+  btnSlot.appendChild(btn.el);
 
   return article;
 }

@@ -1,8 +1,8 @@
 import { createButton } from "../components/button/button";
 import { createHeader } from "../components/header/header";
 import { registerLayout } from "../layout/register/registerLayout";
+import { goTo } from "../router/router";
 import { appState } from "../store/state";
-import { authEmailPage } from "./authEmailPage";
 
 export function registerPage(root: HTMLElement) {
   root.innerHTML = "";
@@ -15,6 +15,12 @@ export function registerPage(root: HTMLElement) {
     const startHeader = createHeader();
     slotHedaer.replaceWith(startHeader.el);
   }
+
+  const linkEl = view.querySelector<HTMLLinkElement>("#rg-link");
+  linkEl?.addEventListener("click", (e) => {
+    e.preventDefault();
+    goTo("/login");
+  });
 
   const nameInput = view.querySelector<HTMLInputElement>("#name");
   const emailInput = view.querySelector<HTMLInputElement>("#email");

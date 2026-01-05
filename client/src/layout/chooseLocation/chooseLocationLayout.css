@@ -1,0 +1,21 @@
+.cl-main {
+  display: flex;
+  justify-content: center;
+  min-height: calc(100dvh - 60px);
+}
+
+.cl-main__container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  font-family: lato;
+  justify-content: space-between;
+  padding: 20px 0px 20px 0px;
+}
+
+.cl-main__map {
+  border-radius: 10px;
+}
+.cl-main__title {
+  align-self: center;
+}

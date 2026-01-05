@@ -31,10 +31,10 @@ export async function getMyPets(req: Request, res: Response) {
 
 export async function getNearbyPets(req: Request, res: Response) {
   try {
-    const { lat, lng } = req.query;
-    console.log(lat, lng);
+    const lat = Number(req.query.lat);
+    const lng = Number(req.query.lng);
 
-    const results = await PetService.getNearbyPets(Number(lat), Number(lng));
+    const results = await PetService.getNearbyPets(lat, lng);
 
     res.json({ results });
   } catch (err: any) {

@@ -29,7 +29,6 @@ export function loginLayout() {
             <input id="password" class="lg-input" type="password">
           </div>
 
-          <a class="lg-link" href="">Olvidé mi contraseña</a>
           </form>
 
           <div id="slot-btn" form="login-form" class="lg-btn"></div>

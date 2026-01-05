@@ -10,6 +10,8 @@ import { reportPetPage } from "../pages/reportPetPage";
 import { editPetPage } from "../pages/editPetPage";
 import { myPetsPage } from "../pages/myPetsPage";
 import { reportEmptyPage } from "../pages/reportEmptyPage";
+import { chooseLocationPage } from "../pages/chooseLocationPage";
+import { homePetsPage } from "../pages/homePetsPage";
 
 type PageFn = (
   root: HTMLElement,
@@ -25,9 +27,11 @@ const routes: Record<string, PageFn> = {
   "/profile": profilePage,
   "/changePassword": changePassPage,
   "/reportPet": reportPetPage,
-  "/editPet": editPetPage, // 👈 base de la ruta dinámica
+  "/editPet": editPetPage, 
   "/myPetsReported": myPetsPage,
   "/reportEmpty": reportEmptyPage,
+  "/chooseLocation": chooseLocationPage,
+  "/petsNearby": homePetsPage,
 };
 
 const privateRoutes = [
@@ -39,6 +43,7 @@ const privateRoutes = [
 
 const root = document.getElementById("app")!;
 let cleanup: (() => void) | undefined;
+console.log("🧭 render route:", location.hash);
 
 function render() {
   cleanup?.();
@@ -74,6 +79,7 @@ function render() {
 }
 
 export function goTo(path: string) {
+  console.log("➡️ goTo:", path);
   location.hash = path;
 }
 

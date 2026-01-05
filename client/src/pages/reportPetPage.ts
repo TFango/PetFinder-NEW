@@ -94,7 +94,7 @@ export function reportPetPage(root: HTMLElement) {
         text: "Reportar mascota",
         className: "btn--green",
       },
-      () => {
+      async () => {
         const name = nameInput?.value;
         const location = mapPicker?.getLocation();
         const files = dropzone?.getFiles();
@@ -114,13 +114,14 @@ export function reportPetPage(root: HTMLElement) {
           return;
         }
 
-        appState.createPet(
+        await appState.createPet(
           name,
           String(location.lat),
           String(location.lng),
           files[0],
           locationText ?? "" // 👈 EL File real,
         );
+        goTo("/myPetsReported")
       }
     );
     btnReportSlot.replaceWith(startBtn.el);

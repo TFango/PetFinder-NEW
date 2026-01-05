@@ -32,8 +32,10 @@ export async function myPetsPage(root: HTMLElement) {
       name: pet.name,
       imageUrl: pet.imageUrl,
       location: pet.location,
-      onEdit: (petId) => {
-        goTo(`/editPet/${petId}`);
+      button: {
+        text: "Editar",
+        className: "btn--myPets",
+        onClick: (id) => goTo(`/editPet/${id}`),
       },
     });
     petsList.appendChild(card);
